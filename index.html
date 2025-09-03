@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Player</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    min-height: 100vh;
+    background: url(https://wallpapers.com/images/hd/radio-1360-x-768-4hkl6ai4ymy5awty.jpg) no-repeat center center;
+    background-size: cover;
+    color: #fff; text-align: center;
+    gap: 30px; padding: 20px;
+  }
+
+  /* Disco giratório */
+  .circle {
+    width: 200px; height: 200px;
+    max-width: 80vw; max-height: 80vw;
+    border-radius: 50%;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOZMQ1x9dfg_tetBZc2oJMXLqcZPDSh1KP6Q&s') no-repeat center;
+    background-size: cover;
+    border: 4px solid #fff;
+    animation: spin 6s linear infinite;
+    animation-play-state: paused;
+  }
+  .circle.playing { animation-play-state: running; }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Informação */
+  .music-info h2 { font-size: 24px; margin-bottom: 5px; }
+  .music-info p { font-size: 18px; color: #ddd; }
+
+  /* Botões */
+ /* Botões */
+/* Contêiner dos botões */
+.controls {
+  display: flex;
+  gap: 20px;
+}
+
+/* Botão base */
+.controls button {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+.controls button:focus {
+  outline: none;
+}
+
+/* Botão Play → Verde */
+#playBtn {
+  background: linear-gradient(145deg, #28a745, #1e7e34);
+}
+#playBtn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(145deg, #34d058, #218838);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+}
+#playBtn:focus {
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.4);
+}
+/* Responsividade */ @media (max-width: 628px) { body { gap: 20px; background-position: 100%; padding: 15px; } .circle { width: 150px; height: 150px; } } @media (max-width: 480px) { body { gap: 15px; padding: 10px; } .circle { width: 120px; height: 120px; } } .circle.playing { animation-play-state: running; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* Botão Pause → Vermelho */
+#pauseBtn {
+  background: linear-gradient(145deg, #84262c, #84262c);
+}
+#pauseBtn:hover {
+  transform: scale(1.1);
+  background: linear-gradient(145deg, #84262c, #c82333);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6);
+}
+#pauseBtn:focus {
+  box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.4);
+}
+
+
+  /* Volume */
+  .progress-section { width: 100%; max-width: 350px; }
+  #progress {
+    width: 100%; height: 20px;
+    -webkit-appearance: none; background: #ffffff;
+    border-radius: 10px; cursor: pointer;
+  }
+  #progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #fff; border: 2px solid #000; cursor: pointer;
+  }
+  #progress::-moz-range-thumb {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #fff; border: 2px solid #000; cursor: pointer;
+  }
+
+  /* Redes sociais */
+/* Redes sociais */
+.socials {
+  display: flex;
+  gap: 20px;
+  background-color: #e2dfe2;
+  width: auto 80px;
+  padding: 15px;
+  border-radius: 20px;
+  justify-content: center;
+}
+
+.socials a {
+  font-size: 26px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Facebook */
+.socials a[href*="facebook"] {
+  color: #1877F2;
+}
+.socials a[href*="facebook"]:hover {
+  opacity: 0.8;
+  transform: scale(1.2);
+}
+
+/* Twitter (X) */
+.socials a[href*="twitter"] {
+  color: #1DA1F2;
+}
+.socials a[href*="twitter"]:hover {
+  opacity: 0.8;
+  transform: scale(1.2);
+}
+
+/* Instagram (gradiente oficial) */
+.socials a[href*="instagram"] {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.socials a[href*="instagram"]:hover {
+  opacity: 0.8;
+  transform: scale(1.2);
+}
+
+/* YouTube */
+.socials a[href*="youtube"] {
+  color: #FF0000;
+}
+.socials a[href*="youtube"]:hover {
+  opacity: 0.8;
+  transform: scale(1.2);
+}
+
+
+  /* Responsivo */
+  @media (max-width: 500px) {
+    .circle { width: 160px; height: 160px; }
+    .controls button { width: 70px; height: 70px; font-size: 26px; }
+    .music-info h2 { font-size: 20px; }
+    .music-info p { font-size: 16px; }
+    .progress-section { max-width: 250px; }
+    .socials a { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Disco e informações -->
+  <div class="circle" id="circle"></div>
+  <div class="music-info">
+    <h2>RyzemPlay</h2>
+    <p>Melhor Rádio do momento</p>
+  </div>
+
+  <!-- Controles -->
+  <div class="controls">
+    <button id="playBtn"><i class="fas fa-play"></i></button>
+    <button id="pauseBtn" style="display:none;"><i class="fas fa-pause"></i></button>
+  </div>
+
+  <!-- Barra de volume -->
+  <div class="progress-section">
+    <input type="range" id="progress" min="0" max="100" value="50">
+  </div>
+
+  <!-- Redes sociais -->
+  <div class="socials">
+    <a class="face" href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+  </div>
+
+  <!-- Áudio -->
+  <audio id="audio" src="https://stm1.matutos.com.br:8072/;"></audio>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const circle = document.getElementById('circle');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const volumeSlider = document.getElementById('progress');
+
+    // Volume inicial
+    audio.volume = 0.5;
+    volumeSlider.value = audio.volume * 100;
+
+    // Play
+    playBtn.addEventListener('click', () => {
+      audio.play().catch(err => console.log(err));
+      circle.classList.add('playing');
+      playBtn.style.display = "none";
+      pauseBtn.style.display = "flex";
+    });
+
+    // Pause
+    pauseBtn.addEventListener('click', () => {
+      audio.pause();
+      circle.classList.remove('playing');
+      pauseBtn.style.display = "none";
+      playBtn.style.display = "flex";
+    });
+
+    // Volume
+    volumeSlider.addEventListener('input', () => {
+      audio.volume = volumeSlider.value / 100;
+    });
+  </script>
+
+</body>
+</html>
