@@ -16,7 +16,7 @@
     display: flex; flex-direction: column;
     justify-content: center; align-items: center;
     min-height: 100vh;
-    background: url(https://img.myloview.com.br/posters/no-estudio-de-radio-400-38133459.jpg) no-repeat center center;
+    background: url(https://wallpapers.com/images/hd/on-air-black-radio-station-4hkl6ai4ymy5awty.jpg) no-repeat center center;
     background-size: cover;
     color: #fff; text-align: center;
     gap: 30px; padding: 20px;
@@ -39,6 +39,24 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+.radio-title {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 35px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px #282828, 0 0 10px #ff0000, 0 0 20px #ff0000;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #282828, 0 0 10px #ff0000, 0 0 20px #282828;
+  }
+  100% {
+    text-shadow: 0 0 15px #282828, 0 0 30px #282828, 0 0 45px #ff4d4d;
+  }
+}
 
   /* Informação */
   .music-info h2 { font-size: 24px; margin-bottom: 5px; }
@@ -89,7 +107,7 @@
   background: linear-gradient(145deg, red, #4e0b0b);
 }
 #playBtn:hover {
-  background: linear-gradient(145deg, #34c759, #228b45);
+  background: linear-gradient(145deg, red, #4e0b0b);
 }
 #playBtn:focus {
   box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.4);
@@ -97,10 +115,10 @@
 
 /* Botão Pause */
 #pauseBtn {
-  background: linear-gradient(145deg, #dc3545, #a71d2a);
+  background: linear-gradient(145deg, #4e0b0b, #4e0b0b);
 }
 #pauseBtn:hover {
-  background: linear-gradient(145deg, #e74c5b, #b82330);
+  background: linear-gradient(145deg, #4e0b0b, #4e0b0b);
 }
 #pauseBtn:focus {
   box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.4);
@@ -112,11 +130,11 @@
     gap: 20px; background-position: 100%; padding: 15px; } .circle { width: 150px; height: 150px; } } @media (max-width: 480px) { body { gap: 15px; padding: 10px; } .circle { width: 120px; height: 120px; } } .circle.playing { animation-play-state: running; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 /* Botão Pause → Vermelho */
 #pauseBtn {
-  background: linear-gradient(145deg, #84262c, #84262c);
+  background: linear-gradient(145deg, #4e0b0b, #84262c);
 }
 #pauseBtn:hover {
   transform: scale(1.1);
-  background: linear-gradient(145deg, #84262c, #c82333);
+  background: linear-gradient(145deg, #84262c, #4e0b0b);
   box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6);
 }
 #pauseBtn:focus {
@@ -135,27 +153,31 @@
   width: 100%;
   height: 20px;
   -webkit-appearance: none;
-  background: #333; /* cinza escuro */
   border-radius: 10px;
   cursor: pointer;
   outline: none;
+  /* Gradiente inicial: 50% preenchido vermelho, 50% cinza escuro */
+  background: linear-gradient(to right, #ff0000 50%, #c9c9c9 50%);
   box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
 }
 
 /* Chrome, Edge, Safari */
 #progress::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 20px; height: 20px;
   border-radius: 50%;
-  background: #fff; /* bolinha branca */
+  background: #fff;
   border: 2px solid #222;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-  transition: transform 0.2s ease, background 0.3s ease;
+  cursor: pointer;
 }
-#progress::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-  background: #e0e0e0;
+
+/* Firefox */
+#progress::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #222;
+  cursor: pointer;
 }
 
 /* Firefox */
@@ -241,18 +263,20 @@
     .socials a { font-size: 22px; }
   }
 </style>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#28a745">
 
 </head>
 <body>
 
-  <!-- Disco e informações -->
-       <p style="border-radius: 30px; background-color: red; padding: 8px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">AO VIVO</p>
+  
+   
+
+
+   <p id="clock" style="border-radius: 30px; background-color: red; padding: 8px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">AO VIVO</p>
   <div class="circle" id="circle"></div>
   <div class="music-info">
-    <h2 style=" font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 35px;">Rádio Web Forte</h2>
+<h2 class="radio-title">Rádio Web Forte</h2>
 
+      <!--  <p  style="border-radius: 30px; background-color: red; padding: 8px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">AO VIVO</p>-->
   </div>
 
   <!-- Controles -->
@@ -278,41 +302,61 @@
   <audio id="audio" src="https://stm1.matutos.com.br:8072/;"></audio>
 
   <script>
-    const audio = document.getElementById('audio');
-    const circle = document.getElementById('circle');
-    const playBtn = document.getElementById('playBtn');
-    const pauseBtn = document.getElementById('pauseBtn');
-    const volumeSlider = document.getElementById('progress');
+const audio = document.getElementById('audio');
+const circle = document.getElementById('circle');
+const playBtn = document.getElementById('playBtn');
+const pauseBtn = document.getElementById('pauseBtn');
+const progress = document.getElementById('progress');
 
-    // Volume inicial
-    audio.volume = 0.5;
-    volumeSlider.value = audio.volume * 100;
+// Volume inicial
+audio.volume = 0.5;
+progress.value = audio.volume * 100;
+progress.style.background = `linear-gradient(to right, #ff0000 ${progress.value}%, #c9c9c9 ${progress.value}%)`;
 
-    // Play
-    playBtn.addEventListener('click', () => {
-      audio.play().catch(err => console.log(err));
-      circle.classList.add('playing');
-      playBtn.style.display = "none";
-      pauseBtn.style.display = "flex";
-    });
+// Atualizar barra de volume com gradiente
+progress.addEventListener('input', () => {
+  const value = progress.value;
+  audio.volume = value / 100;
+  progress.style.background = `linear-gradient(to right, #ff0000 ${value}%, #c9c9c9 ${value}%)`;
+});
 
-    // Pause
-    pauseBtn.addEventListener('click', () => {
-      audio.pause();
-      circle.classList.remove('playing');
-      pauseBtn.style.display = "none";
-      playBtn.style.display = "flex";
-    });
+// Função para reiniciar animação corretamente
+function restartCircle() {
+  circle.style.animation = 'none';
+  void circle.offsetWidth; // força reflow
+  circle.style.animation = 'spin 6s linear infinite';
+}
+// Relógio
+function atualizarRelogio() {
+  const agora = new Date();
+  const horas = String(agora.getHours()).padStart(2, '0');
+  const minutos = String(agora.getMinutes()).padStart(2, '0');
+  const segundos = String(agora.getSeconds()).padStart(2, '0');
+  document.getElementById('clock').textContent = `${horas}:${minutos}:${segundos}`;
+}
 
-    // Volume
-    volumeSlider.addEventListener('input', () => {
-      audio.volume = volumeSlider.value / 100;
-    });
-      if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(reg => console.log("Service Worker registrado:", reg))
-      .catch(err => console.log("Erro ao registrar SW:", err));
-  }
+// Atualiza a cada 1 segundo
+setInterval(atualizarRelogio, 1000);
+atualizarRelogio(); // chama já na primeira vez
+
+// Play
+playBtn.addEventListener('click', () => {
+  audio.play().then(() => {
+    restartCircle();
+    playBtn.style.display = "none";
+    pauseBtn.style.display = "flex";
+  }).catch(err => console.log("Erro ao reproduzir:", err));
+});
+
+// Pause
+pauseBtn.addEventListener('click', () => {
+  audio.pause();
+  circle.style.animation = 'none';
+  circle.style.transform = 'rotate(0deg)'; // 🔑 reseta a posição
+  pauseBtn.style.display = "none";
+  playBtn.style.display = "flex";
+});
+
   </script>
 
 </body>
